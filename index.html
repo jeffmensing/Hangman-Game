@@ -27,37 +27,20 @@
 					<h1>Hangman - hanging</h1>
 					<p>This div will contain the hangman.</p>
 				</div>
-				<div class="col-lg-8">
+				<div class="col-lg-8" id="mysteryWord">
 					<h1>This will contain the word to guess.</h1>
+					<p id="hangmanword"> Word will appear </p>
 				</div>
 			</div>
 		</div>
 	</div>			
 
 </div>
-<script type="text/javascript">
-$( document ).ready(function() {
-  
 
-
- 	// Variables
- 	var wins = 0;
- 	var losses = 0;
- 	var wordsToGuess = ['dallas', 'houston', 'austin'];
- 	var lettersGuessed = [];
- 	
-
- 	// Capture letter
-    document.onkeyup = function(event) {
-
-	var letter = String.fromCharCode(event.keyCode).toLowerCase();
-
-	console.log(letter);
-
-
-};
-});
-</script>
+<script src="assets/javascript/game.js"></script>
 
 </body>
+
+
+
 </html>
