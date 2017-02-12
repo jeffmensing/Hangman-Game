@@ -1,8 +1,20 @@
 // Variables
 var wins = 0;
 var losses = 0;
-var lettersGuessed = [];
+var guessesLeft = 0;
 var words = ['cat', 'tree', 'swing', 'around', 'scientist'];
+
+function resetGame() {
+	var lettersGuessed = "";
+	guessesLeft = 0;
+	wordAnswer = chooseWord();
+	wordAnswerShown = blanksFromAnswer(wordAnswer);
+	$("#hmpic").html('<img src="assets/images/Hangman0.png">');
+	$("#hangmanword").html("<h1>" + wordAnswerShown + "</h1>");
+	console.log("resetGame " + wordAnswer);
+ 	console.log("resetGame " + wordAnswerShown);
+	return;
+};
 
 // This function will pick our word
 function chooseWord () {
@@ -21,87 +33,64 @@ function blanksFromAnswer ( answerWord ) {
     return result;
 };
 
+function setGuesses(word1, word2) {
+	if (word1 == word2) {
+		guessesLeft++;
+//		if guessesLeft == 1 {
+		$("#hmpic").html('<img src="assets/images/Hangman' + guessesLeft + '.png">');
+	}
+	return;
+}
+
 //This function will check for the letter guessed in the var wordAnswer
 //and return the new version of the wordAnswerShown to display if letter is found
 
-
-/* INVESTIGATE THIS
-In JavaScript, strings are immutable, which means the best you can do is create a new string with the changed content, and assign the variable to point to it.
-
-You'll need to define the replaceAt() function yourself:
-
-String.prototype.replaceAt=function(index, character) {
-    return this.substr(0, index) + character + this.substr(index+character.length);
-}
-And use it like this:
-
-str = str.replaceAt(3, "a");
-*/
 function replaceAt(a, b, originalString) {
 	return originalString.substr(0,a) + b + originalString.substr(a+1,originalString.length);
-}
+};
 function checkLetter ( letter, newDisplayWord, wordAnswer ) {
 	var xIndex = 0;
-
 	xIndex = wordAnswer.indexOf(letter);
 	while (xIndex >= 0) {
 		newDisplayWord = replaceAt(xIndex, letter, newDisplayWord);
 		xIndex = wordAnswer.indexOf(letter, xIndex +1);
 	}
 return newDisplayWord;
-}
-
-/*
-	for (i=0; i < wordAnswer.length; i++) {
-			if (letter == wordAnswer[i]) {
-//				console.log("Match! " + letter);
-				newDisplayWord[i] = letter;
-			}
-			else {
-				console.log("no mathch");
-			}
-		}
-	return newDisplayWord;
 };
-*/
-
-
 
 
  //Start Game - press any key
 document.onkeyup = function(event) {
-
+	
+console.log("start Game press any key");
 	wordAnswer = chooseWord();
-
-	console.log(wordAnswer);
-
 	wordAnswerShown = blanksFromAnswer(wordAnswer);
- 	
- 	console.log(wordAnswerShown);
+	$("#hmpic").html('<img src="assets/images/Hangman0.png">');
+	$("#hangmanword").html("<h1>" + wordAnswerShown + "</h1>");
 
- 			// Capture letter
-  			document.onkeyup = function(event) {
+  	document.onkeyup = function(event) {
+		var letter = String.fromCharCode(event.keyCode).toLowerCase();
+				//Checking letter selected
+		console.log(letter);
+		checkedWord = checkLetter(letter, wordAnswerShown, wordAnswer);
+		setGuesses(checkedWord, wordAnswerShown);
+		wordAnswerShown = checkedWord;
+				//Checking if word answer updated
+		console.log(wordAnswerShown);
+		$("#hangmanword").html("<h1>" + wordAnswerShown + "</h1>");
+		console.log("guessesLeft" + guessesLeft);
+		if (guessesLeft == 6) {
+			losses++;
+			resetGame();
+				}
+		else if (wordAnswer == wordAnswerShown) {
+			wins++;
+			$("#wins").html("<h1>Number of wins: " + wins + "</h1>");
+			resetGame();
+			}	
+		};
 
-			var letter = String.fromCharCode(event.keyCode).toLowerCase();
-
-			//Checking letter selected
-			console.log(letter);
-
-			checkedWord = checkLetter(letter, wordAnswerShown, wordAnswer);
-
-			wordAnswerShown = checkedWord;
-			
-			console.log(wordAnswerShown);
-
-
-
-
-			//Display guessed letter
-
-
-
-			//Reduce number of guesses left
-
-			};
-	};
+};
+		
+	
 
