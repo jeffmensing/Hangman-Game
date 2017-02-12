@@ -36,8 +36,7 @@ function setGuesses(word1, word2) {
 	if (word1 == word2) {
 		guessesLeft++;
 		$("#hmpic").html('<img src="assets/images/Hangman' + guessesLeft + '.png">');
-		$("#guessesRem").html('<h2 id="guessesRem">Guesses Left: </h2>' + guessesLeft);
-	}
+		}
 	return;
 }
 
@@ -74,10 +73,7 @@ console.log("start Game press any key");
 		checkedWord = checkLetter(letter, wordAnswerShown, wordAnswer);
 		setGuesses(checkedWord, wordAnswerShown);
 		wordAnswerShown = checkedWord;
-				//Checking if word answer updated
-		console.log(wordAnswerShown);
 		$("#hangmanword").html("<h1>" + wordAnswerShown + "</h1>");
-		console.log("guessesLeft" + guessesLeft);
 		if (guessesLeft == 6) {
 			losses++;
 			resetGame();
