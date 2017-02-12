@@ -2,7 +2,7 @@
 var wins = 0;
 var losses = 0;
 var guessesLeft = 0;
-var words = ['cat', 'tree', 'swing', 'around', 'scientist'];
+var words = ['cat', 'tree', 'swing', 'around', 'scientist', 'coffee', 'football', 'touchdown'];
 
 function resetGame() {
 	var lettersGuessed = "";
@@ -11,8 +11,7 @@ function resetGame() {
 	wordAnswerShown = blanksFromAnswer(wordAnswer);
 	$("#hmpic").html('<img src="assets/images/Hangman0.png">');
 	$("#hangmanword").html("<h1>" + wordAnswerShown + "</h1>");
-	console.log("resetGame " + wordAnswer);
- 	console.log("resetGame " + wordAnswerShown);
+	$("#guessesRem").html('<h1 id="guessesRem">Guesses Left: </h1>' + guessesLeft);
 	return;
 };
 
@@ -36,8 +35,8 @@ function blanksFromAnswer ( answerWord ) {
 function setGuesses(word1, word2) {
 	if (word1 == word2) {
 		guessesLeft++;
-//		if guessesLeft == 1 {
 		$("#hmpic").html('<img src="assets/images/Hangman' + guessesLeft + '.png">');
+		$("#guessesRem").html('<h2 id="guessesRem">Guesses Left: </h2>' + guessesLeft);
 	}
 	return;
 }
@@ -61,7 +60,7 @@ return newDisplayWord;
 
  //Start Game - press any key
 document.onkeyup = function(event) {
-	
+
 console.log("start Game press any key");
 	wordAnswer = chooseWord();
 	wordAnswerShown = blanksFromAnswer(wordAnswer);
