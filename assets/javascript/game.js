@@ -3,15 +3,18 @@ var wins = 0;
 var losses = 0;
 var guessesLeft = 0;
 var words = ['cat', 'tree', 'swing', 'around', 'scientist', 'coffee', 'football', 'touchdown'];
+var lettersGuessed = [];
 
 function resetGame() {
-	var lettersGuessed = "";
+	lettersGuessed = [];
 	guessesLeft = 0;
 	wordAnswer = chooseWord();
 	wordAnswerShown = blanksFromAnswer(wordAnswer);
+	wrongLetters = [];
 	$("#hmpic").html('<img src="assets/images/Hangman0.png">');
 	$("#hangmanword").html("<h1>" + wordAnswerShown + "</h1>");
 	$("#guessesRem").html('<h1 id="guessesRem">Guesses Left: </h1>' + guessesLeft);
+	$("#guessedLetters").html("<h2>Letters guessed: " + lettersGuessed + "</h2>");
 	return;
 };
 
@@ -70,6 +73,8 @@ console.log("start Game press any key");
 		var letter = String.fromCharCode(event.keyCode).toLowerCase();
 				//Checking letter selected
 		console.log(letter);
+		lettersGuessed.push(letter);
+		$("#guessedLetters").html("<h2>Letters guessed: " + lettersGuessed + "</h2>");
 		checkedWord = checkLetter(letter, wordAnswerShown, wordAnswer);
 		setGuesses(checkedWord, wordAnswerShown);
 		wordAnswerShown = checkedWord;
